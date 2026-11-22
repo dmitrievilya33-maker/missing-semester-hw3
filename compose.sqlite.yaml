@@ -1,0 +1,22 @@
+# Промежуточный этап на 6 баллов; запускается отдельно от compose.yaml.
+services:
+  app:
+    build: .
+    environment:
+      PORT: "8000"
+      GREETING: ${GREETING:-Hello, Docker!}
+      STORAGE: sqlite
+      DATA_FILE: /data/counter.db
+    ports:
+      - "127.0.0.1:${APP_PORT:-8080}:8000"
+    volumes:
+      - sqlite-data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/readyz', timeout=2).read()"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+volumes:
+  sqlite-data:

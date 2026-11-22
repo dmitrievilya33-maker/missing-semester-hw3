@@ -1,0 +1,256 @@
+Docker Compose version v5.7.0
+Тестовый проект: hw3-check-1795373077-9626
+
+=== Новое хранилище и N=3 увеличения ===
+ Image hw3-check-1795373077-9626-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 716B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 409B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.13-slim
+#3 DONE 0.4s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 95B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 94B done
+#5 DONE 0.0s
+
+#6 [1/5] FROM docker.io/library/python:3.13-slim@sha256:e48f59cdba69a3cbd9ed2cf0f348d90d45a8d350d98134cf1070bc106ee9ed90
+#6 resolve docker.io/library/python:3.13-slim@sha256:e48f59cdba69a3cbd9ed2cf0f348d90d45a8d350d98134cf1070bc106ee9ed90 done
+#6 DONE 0.0s
+
+#7 [3/5] COPY app/requirements.txt .
+#7 CACHED
+
+#8 [4/5] RUN pip install --no-cache-dir -r requirements.txt     && useradd --uid 10001 --create-home appuser     && mkdir /data     && chown appuser:appuser /data
+#8 CACHED
+
+#9 [2/5] WORKDIR /app
+#9 CACHED
+
+#10 [5/5] COPY app/app.py .
+#10 CACHED
+
+#11 exporting to image
+#11 exporting layers done
+#11 exporting manifest sha256:bf59e46ec45a158d15aaf6431da6c14dc43e2a4e2cc43dbde0a9d4bd35f3ca2b done
+#11 exporting config sha256:4268c0bcc0c90174c760aa84c2b856399c28fcb7a59bd7dbf08e3b20217ede8f done
+#11 exporting attestation manifest sha256:4c0c33c2dbcb1ebfae43db82830b38cf36795fc07b6924d1257b2528df17d736 done
+#11 exporting manifest list sha256:77daac421f79fe9fa314f305c2b5852b7573559096547670b626e706c7cd3e35 done
+#11 naming to docker.io/library/hw3-check-1795373077-9626-app:latest done
+#11 unpacking to docker.io/library/hw3-check-1795373077-9626-app:latest done
+#11 DONE 0.0s
+
+#12 resolving provenance for metadata file
+#12 DONE 0.0s
+ Image hw3-check-1795373077-9626-app Built 
+ Network hw3-check-1795373077-9626_default Creating 
+ Network hw3-check-1795373077-9626_default Creating 
+ Volume hw3-check-1795373077-9626_redis-data Creating 
+ Volume hw3-check-1795373077-9626_redis-data Creating 
+ Volume hw3-check-1795373077-9626_redis-data Created 
+ Volume hw3-check-1795373077-9626_redis-data Created 
+ Network hw3-check-1795373077-9626_default Created 
+ Network hw3-check-1795373077-9626_default Created 
+ Container hw3-check-1795373077-9626-redis-1 Creating 
+ Container hw3-check-1795373077-9626-redis-1 Created 
+ Container hw3-check-1795373077-9626-app-1 Creating 
+ Container hw3-check-1795373077-9626-app-1 Created 
+ Container hw3-check-1795373077-9626-redis-1 Starting 
+ Container hw3-check-1795373077-9626-redis-1 Started 
+ Container hw3-check-1795373077-9626-redis-1 Waiting 
+ Container hw3-check-1795373077-9626-redis-1 Healthy 
+ Container hw3-check-1795373077-9626-app-1 Starting 
+ Container hw3-check-1795373077-9626-app-1 Started 
+ Container hw3-check-1795373077-9626-app-1 Waiting 
+ Container hw3-check-1795373077-9626-redis-1 Waiting 
+ Container hw3-check-1795373077-9626-redis-1 Healthy 
+ Container hw3-check-1795373077-9626-app-1 Healthy 
+GET / -> HTTP 200 {"greeting": "Recovery check", "count": 0, "hostname": "0cf3d5d950e3", "storage": "redis"}
+POST /increment -> HTTP 200 {"greeting": "Recovery check", "count": 1, "hostname": "0cf3d5d950e3", "storage": "redis"}
+POST /increment -> HTTP 200 {"greeting": "Recovery check", "count": 2, "hostname": "0cf3d5d950e3", "storage": "redis"}
+POST /increment -> HTTP 200 {"greeting": "Recovery check", "count": 3, "hostname": "0cf3d5d950e3", "storage": "redis"}
+
+=== Ограничения приложения ===
+uid= 10001
+read_only=true, RAM<=256 MiB, CPU<=1
+
+=== Пересоздание только приложения ===
+ Container hw3-check-1795373077-9626-app-1 Recreate 
+ Container hw3-check-1795373077-9626-app-1 Recreated 
+ Container hw3-check-1795373077-9626-app-1 Starting 
+ Container hw3-check-1795373077-9626-app-1 Started 
+ Container hw3-check-1795373077-9626-app-1 Waiting 
+ Container hw3-check-1795373077-9626-app-1 Healthy 
+GET / -> HTTP 200 {"greeting": "Recovery check", "count": 3, "hostname": "f726d06c5021", "storage": "redis"}
+
+=== Сохранность после down и up без удаления volume ===
+ Container hw3-check-1795373077-9626-app-1 Stopping 
+ Container hw3-check-1795373077-9626-app-1 Stopped 
+ Container hw3-check-1795373077-9626-app-1 Removing 
+ Container hw3-check-1795373077-9626-app-1 Removed 
+ Container hw3-check-1795373077-9626-redis-1 Stopping 
+ Container hw3-check-1795373077-9626-redis-1 Stopped 
+ Container hw3-check-1795373077-9626-redis-1 Removing 
+ Container hw3-check-1795373077-9626-redis-1 Removed 
+ Network hw3-check-1795373077-9626_default Removing 
+ Network hw3-check-1795373077-9626_default Removed 
+ Network hw3-check-1795373077-9626_default Creating 
+ Network hw3-check-1795373077-9626_default Creating 
+ Network hw3-check-1795373077-9626_default Created 
+ Network hw3-check-1795373077-9626_default Created 
+ Container hw3-check-1795373077-9626-redis-1 Creating 
+ Container hw3-check-1795373077-9626-redis-1 Created 
+ Container hw3-check-1795373077-9626-app-1 Creating 
+ Container hw3-check-1795373077-9626-app-1 Created 
+ Container hw3-check-1795373077-9626-redis-1 Starting 
+ Container hw3-check-1795373077-9626-redis-1 Started 
+ Container hw3-check-1795373077-9626-redis-1 Waiting 
+ Container hw3-check-1795373077-9626-redis-1 Healthy 
+ Container hw3-check-1795373077-9626-app-1 Starting 
+ Container hw3-check-1795373077-9626-app-1 Started 
+ Container hw3-check-1795373077-9626-redis-1 Waiting 
+ Container hw3-check-1795373077-9626-app-1 Waiting 
+ Container hw3-check-1795373077-9626-redis-1 Healthy 
+ Container hw3-check-1795373077-9626-app-1 Healthy 
+GET / -> HTTP 200 {"greeting": "Recovery check", "count": 3, "hostname": "0cf7a9548d79", "storage": "redis"}
+
+=== Отключение Redis: 200, 503, 503 ===
+ Container hw3-check-1795373077-9626-redis-1 Stopping 
+ Container hw3-check-1795373077-9626-redis-1 Stopped 
+GET /healthz -> HTTP 200 {"status": "alive"}
+GET /readyz -> HTTP 503 {"error": "storage_unavailable"}
+POST /increment -> HTTP 503 {"error": "storage_unavailable"}
+
+=== Возврат Redis без перезапуска приложения ===
+ Container hw3-check-1795373077-9626-redis-1 Starting 
+ Container hw3-check-1795373077-9626-redis-1 Started 
+GET / -> HTTP 200 {"greeting": "Recovery check", "count": 3, "hostname": "0cf7a9548d79", "storage": "redis"}
+POST /increment -> HTTP 200 {"greeting": "Recovery check", "count": 4, "hostname": "0cf7a9548d79", "storage": "redis"}
+
+=== Согласованная резервная копия остановленного Redis ===
+ Container hw3-check-1795373077-9626-app-1 Stopping 
+ Container hw3-check-1795373077-9626-app-1 Stopped 
+ Container hw3-check-1795373077-9626-redis-1 Stopping 
+ Container hw3-check-1795373077-9626-redis-1 Stopped 
+Резервная копия: /Users/ilya/Documents/проекты/python-homework/ami-python-basic-st-26f-ilyad0028/алгосы/missing-semester-hw3/backups/hw3-check-1795373077-9626.tar
+redis-1  | 1:C 22 Nov 2026 18:44:56.472 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 1:C 22 Nov 2026 18:44:56.472 * Redis version=7.4.12, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1  | 1:C 22 Nov 2026 18:44:56.472 * Configuration loaded
+redis-1  | 1:M 22 Nov 2026 18:44:56.472 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 22 Nov 2026 18:44:56.472 * Running mode=standalone, port=6379.
+redis-1  | 1:M 22 Nov 2026 18:44:56.472 * Server initialized
+redis-1  | 1:M 22 Nov 2026 18:44:56.473 * Reading RDB base file on AOF loading...
+redis-1  | 1:M 22 Nov 2026 18:44:56.473 * Loading RDB produced by version 7.4.12
+redis-1  | 1:M 22 Nov 2026 18:44:56.473 * RDB age 18 seconds
+redis-1  | 1:M 22 Nov 2026 18:44:56.473 * RDB memory usage when created 0.94 Mb
+redis-1  | 1:M 22 Nov 2026 18:44:56.473 * RDB is base AOF
+redis-1  | 1:M 22 Nov 2026 18:44:56.473 * Done loading RDB, keys loaded: 0, keys expired: 0.
+redis-1  | 1:M 22 Nov 2026 18:44:56.473 * DB loaded from base file appendonly.aof.1.base.rdb: 0.000 seconds
+redis-1  | 1:M 22 Nov 2026 18:44:56.473 * DB loaded from incr file appendonly.aof.1.incr.aof: 0.000 seconds
+redis-1  | 1:M 22 Nov 2026 18:44:56.473 * DB loaded from append only file: 0.000 seconds
+redis-1  | 1:M 22 Nov 2026 18:44:56.473 * Opening AOF incr file appendonly.aof.1.incr.aof on server start
+redis-1  | 1:M 22 Nov 2026 18:44:56.473 * Ready to accept connections tcp
+redis-1  | 1:signal-handler (1795373107) Received SIGTERM scheduling shutdown...
+redis-1  | 1:M 22 Nov 2026 18:45:07.400 * User requested shutdown...
+redis-1  | 1:M 22 Nov 2026 18:45:07.400 * Calling fsync() on the AOF file.
+redis-1  | 1:M 22 Nov 2026 18:45:07.401 * Saving the final RDB snapshot before exiting.
+redis-1  | 1:M 22 Nov 2026 18:45:07.402 * DB saved on disk
+redis-1  | 1:M 22 Nov 2026 18:45:07.402 # Redis is now ready to exit, bye bye...
+redis-1  | 1:C 22 Nov 2026 18:45:07.598 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 1:C 22 Nov 2026 18:45:07.598 * Redis version=7.4.12, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1  | 1:C 22 Nov 2026 18:45:07.598 * Configuration loaded
+redis-1  | 1:M 22 Nov 2026 18:45:07.598 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 22 Nov 2026 18:45:07.598 * Running mode=standalone, port=6379.
+redis-1  | 1:M 22 Nov 2026 18:45:07.598 * Server initialized
+redis-1  | 1:M 22 Nov 2026 18:45:07.599 * Reading RDB base file on AOF loading...
+redis-1  | 1:M 22 Nov 2026 18:45:07.599 * Loading RDB produced by version 7.4.12
+redis-1  | 1:M 22 Nov 2026 18:45:07.599 * RDB age 29 seconds
+redis-1  | 1:M 22 Nov 2026 18:45:07.599 * RDB memory usage when created 0.94 Mb
+redis-1  | 1:M 22 Nov 2026 18:45:07.599 * RDB is base AOF
+redis-1  | 1:M 22 Nov 2026 18:45:07.599 * Done loading RDB, keys loaded: 0, keys expired: 0.
+redis-1  | 1:M 22 Nov 2026 18:45:07.599 * DB loaded from base file appendonly.aof.1.base.rdb: 0.000 seconds
+redis-1  | 1:M 22 Nov 2026 18:45:07.599 * DB loaded from incr file appendonly.aof.1.incr.aof: 0.000 seconds
+redis-1  | 1:M 22 Nov 2026 18:45:07.599 * DB loaded from append only file: 0.000 seconds
+redis-1  | 1:M 22 Nov 2026 18:45:07.599 * Opening AOF incr file appendonly.aof.1.incr.aof on server start
+redis-1  | 1:M 22 Nov 2026 18:45:07.599 * Ready to accept connections tcp
+redis-1  | 1:signal-handler (1795373108) Received SIGTERM scheduling shutdown...
+redis-1  | 1:M 22 Nov 2026 18:45:08.112 * User requested shutdown...
+redis-1  | 1:M 22 Nov 2026 18:45:08.112 * Calling fsync() on the AOF file.
+redis-1  | 1:M 22 Nov 2026 18:45:08.112 * Saving the final RDB snapshot before exiting.
+redis-1  | 1:M 22 Nov 2026 18:45:08.113 * DB saved on disk
+redis-1  | 1:M 22 Nov 2026 18:45:08.113 # Redis is now ready to exit, bye bye...
+app-1    | 2026-11-22 18:45:01,737 listening port=8000 storage=redis
+app-1    | 2026-11-22 18:45:06,625 http 127.0.0.1 "GET /readyz HTTP/1.1" 200 -
+app-1    | 2026-11-22 18:45:07,132 http 172.18.0.1 "GET / HTTP/1.1" 200 -
+app-1    | 2026-11-22 18:45:07,483 http 172.18.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1    | 2026-11-22 18:45:07,496 storage_unavailable: ConnectionError
+app-1    | 2026-11-22 18:45:07,496 http 172.18.0.1 "GET /readyz HTTP/1.1" 503 -
+app-1    | 2026-11-22 18:45:07,506 storage_unavailable: ConnectionError
+app-1    | 2026-11-22 18:45:07,506 http 172.18.0.1 "POST /increment HTTP/1.1" 503 -
+app-1    | 2026-11-22 18:45:07,612 http 172.18.0.1 "GET /readyz HTTP/1.1" 200 -
+app-1    | 2026-11-22 18:45:07,687 http 172.18.0.1 "GET / HTTP/1.1" 200 -
+app-1    | 2026-11-22 18:45:07,780 http 172.18.0.1 "POST /increment HTTP/1.1" 200 -
+
+=== Удаление исходного тестового проекта вместе с volumes ===
+ Container hw3-check-1795373077-9626-app-1 Stopping 
+ Container hw3-check-1795373077-9626-app-1 Stopped 
+ Container hw3-check-1795373077-9626-app-1 Removing 
+ Container hw3-check-1795373077-9626-app-1 Removed 
+ Container hw3-check-1795373077-9626-redis-1 Stopping 
+ Container hw3-check-1795373077-9626-redis-1 Stopped 
+ Container hw3-check-1795373077-9626-redis-1 Removing 
+ Container hw3-check-1795373077-9626-redis-1 Removed 
+ Network hw3-check-1795373077-9626_default Removing 
+ Volume hw3-check-1795373077-9626_redis-data Removing 
+ Volume hw3-check-1795373077-9626_redis-data Removed 
+ Network hw3-check-1795373077-9626_default Removed 
+
+=== Восстановление копии в новый volume ===
+ Network hw3-check-1795373077-9626_default Creating 
+ Network hw3-check-1795373077-9626_default Creating 
+ Volume hw3-check-1795373077-9626_redis-data Creating 
+ Volume hw3-check-1795373077-9626_redis-data Creating 
+ Volume hw3-check-1795373077-9626_redis-data Created 
+ Volume hw3-check-1795373077-9626_redis-data Created 
+ Network hw3-check-1795373077-9626_default Created 
+ Network hw3-check-1795373077-9626_default Created 
+ Container hw3-check-1795373077-9626-redis-1 Creating 
+ Container hw3-check-1795373077-9626-redis-1 Created 
+ Container hw3-check-1795373077-9626-app-1 Creating 
+ Container hw3-check-1795373077-9626-app-1 Created 
+ Container hw3-check-1795373077-9626-redis-1 Starting 
+ Container hw3-check-1795373077-9626-redis-1 Started 
+ Container hw3-check-1795373077-9626-redis-1 Waiting 
+ Container hw3-check-1795373077-9626-redis-1 Healthy 
+ Container hw3-check-1795373077-9626-app-1 Starting 
+ Container hw3-check-1795373077-9626-app-1 Started 
+ Container hw3-check-1795373077-9626-redis-1 Waiting 
+ Container hw3-check-1795373077-9626-app-1 Waiting 
+ Container hw3-check-1795373077-9626-redis-1 Healthy 
+ Container hw3-check-1795373077-9626-app-1 Healthy 
+GET / -> HTTP 200 {"greeting": "Recovery check", "count": 4, "hostname": "c37df4971b58", "storage": "redis"}
+POST /increment -> HTTP 200 {"greeting": "Recovery check", "count": 5, "hostname": "c37df4971b58", "storage": "redis"}
+
+=== Завершение и очистка ===
+ Container hw3-check-1795373077-9626-app-1 Stopping 
+ Container hw3-check-1795373077-9626-app-1 Stopped 
+ Container hw3-check-1795373077-9626-app-1 Removing 
+ Container hw3-check-1795373077-9626-app-1 Removed 
+ Container hw3-check-1795373077-9626-redis-1 Stopping 
+ Container hw3-check-1795373077-9626-redis-1 Stopped 
+ Container hw3-check-1795373077-9626-redis-1 Removing 
+ Container hw3-check-1795373077-9626-redis-1 Removed 
+ Network hw3-check-1795373077-9626_default Removing 
+ Volume hw3-check-1795373077-9626_redis-data Removing 
+ Volume hw3-check-1795373077-9626_redis-data Removed 
+ Network hw3-check-1795373077-9626_default Removed 
+
+PASS: все проверки пройдены; тестовые ресурсы удалены.
